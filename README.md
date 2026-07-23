@@ -7,10 +7,11 @@ A read-only PowerShell tool I'm building to learn how Windows security settings 
 - Displays the computer name
 - Displays the Windows edition, version, and build number
 - Returns the results as a structured PowerShell object
+- Reports the status of the Domain, Private, and Public firewall profiles
+- Displays the default inbound and outbound firewall actions
 
 ## Planned Checks
 
-- Windows Firewall
 - Microsoft Defender
 - Secure Boot
 - Drive encryption

@@ -10,5 +10,13 @@ $systemSummary = [PSCustomObject]@{
     BuildNumber     = $computerInfo.OsBuildNumber
 }
 
-$systemSummary
+# Collect the active Windows Firewall settings.
+$firewallProfiles = Get-NetFirewallProfile -PolicyStore ActiveStore |
+    Select-Object Name, Enabled, DefaultInboundAction, DefaultOutboundAction
+
+Write-Host "`nSystem Information" -ForegroundColor Cyan
+$systemSummary | Format-Table -AutoSize
+
+Write-Host "`nWindows Firewall Profiles" -ForegroundColor Cyan
+$firewallProfiles | Format-Table -AutoSize
 
