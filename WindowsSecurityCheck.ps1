@@ -63,6 +63,9 @@ $remoteDesktopEnabled = (
         -Name "fDenyTSConnections"
 ).fDenyTSConnections -eq 0
 
+# Check whether the built-in Guest account is enabled.
+$guestAccountEnabled = (Get-LocalUser -Name "Guest").Enabled
+
 Write-Host "`nSystem Information" -ForegroundColor Cyan
 $systemSummary | Format-Table -AutoSize
 
@@ -86,6 +89,11 @@ $driveEncryptionStatus | Format-List
 Write-Host "`nRemote Desktop Status" -ForegroundColor Cyan
 [PSCustomObject]@{
     Enabled = $remoteDesktopEnabled
+} | Format-List
+
+Write-Host "`nGuest Account Status" -ForegroundColor Cyan
+[PSCustomObject]@{
+    Enabled = $guestAccountEnabled
 } | Format-List
 
 Write-Host "`nLocal Administrator Accounts" -ForegroundColor Cyan

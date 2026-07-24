@@ -7,13 +7,14 @@ A read-only PowerShell tool I'm building to learn how Windows security settings 
 - Displays the computer name
 - Displays the Windows edition, version, and build number
 - Displays a structured system information summary
+- Displays the active network name, adapter, category, and IP connectivity
 - Reports the status of the Domain, Private, and Public firewall profiles
 - Displays the default inbound and outbound firewall actions
-- Displays the active network name, adapter, category, and IP connectivity
 - Reports Microsoft Defender protection status and signature freshness
 - Reports whether Secure Boot is enabled
-- Reports whether Remote Desktop is enabled
 - Reports system drive encryption and BitLocker protection status
+- Reports whether Remote Desktop is enabled
+- Reports whether the built-in Guest account is enabled
 - Lists members of the local Administrators group and their account sources
 - Lists listening TCP ports, local addresses, and owning process IDs
 
@@ -39,7 +40,7 @@ A read-only PowerShell tool I'm building to learn how Windows security settings 
    .\WindowsSecurityCheck.ps1
    ```
 
-Run PowerShell as Administrator to obtain complete Secure Boot and drive encryption results.
+For complete Secure Boot and drive encryption results, run PowerShell as Administrator.
 
 ## Safety
 
