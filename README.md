@@ -12,6 +12,7 @@ A read-only PowerShell tool I'm building to learn how Windows security settings 
 - Displays the active network name, adapter, category, and IP connectivity
 - Reports Microsoft Defender protection status and signature freshness
 - Reports whether Secure Boot is enabled
+- Reports whether Remote Desktop is enabled
 - Reports system drive encryption and BitLocker protection status
 - Lists members of the local Administrators group and their account sources
 - Lists listening TCP ports, local addresses, and owning process IDs

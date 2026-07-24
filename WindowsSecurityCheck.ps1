@@ -56,6 +56,13 @@ catch {
     }
 }
 
+# Check whether Remote Desktop is enabled.
+$remoteDesktopEnabled = (
+    Get-ItemProperty `
+        -Path "HKLM:\System\CurrentControlSet\Control\Terminal Server" `
+        -Name "fDenyTSConnections"
+).fDenyTSConnections -eq 0
+
 Write-Host "`nSystem Information" -ForegroundColor Cyan
 $systemSummary | Format-Table -AutoSize
 
@@ -76,9 +83,15 @@ Write-Host "`nSecure Boot Status" -ForegroundColor Cyan
 Write-Host "`nDrive Encryption Status" -ForegroundColor Cyan
 $driveEncryptionStatus | Format-List
 
+Write-Host "`nRemote Desktop Status" -ForegroundColor Cyan
+[PSCustomObject]@{
+    Enabled = $remoteDesktopEnabled
+} | Format-List
+
 Write-Host "`nLocal Administrator Accounts" -ForegroundColor Cyan
 $localAdminMembers | Format-Table -AutoSize
 
 Write-Host "`nListening TCP Ports" -ForegroundColor Cyan
 $listeningPorts | Format-Table -AutoSize
+
 
