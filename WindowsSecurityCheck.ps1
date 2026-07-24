@@ -22,6 +22,14 @@ $networkProfiles = Get-NetConnectionProfile |
 $defenderStatus = Get-MpComputerStatus |
     Select-Object AMRunningMode, AntivirusEnabled, RealTimeProtectionEnabled, BehaviorMonitorEnabled, IsTamperProtected, AntivirusSignatureAge, AntivirusSignatureLastUpdated
 
+# Check whether Secure Boot is enabled.
+try {
+    $secureBootStatus = Confirm-SecureBootUEFI -ErrorAction Stop
+}
+catch {
+    $secureBootStatus = "Unknown - administrator access or UEFI support required"
+}
+
 Write-Host "`nSystem Information" -ForegroundColor Cyan
 $systemSummary | Format-Table -AutoSize
 
@@ -33,3 +41,9 @@ $firewallProfiles | Format-Table -AutoSize
 
 Write-Host "`nMicrosoft Defender Status" -ForegroundColor Cyan
 $defenderStatus | Format-List
+
+Write-Host "`nSecure Boot Status" -ForegroundColor Cyan
+[PSCustomObject]@{
+    Enabled = $secureBootStatus
+} | Format-List
+

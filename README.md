@@ -11,10 +11,10 @@ A read-only PowerShell tool I'm building to learn how Windows security settings 
 - Displays the default inbound and outbound firewall actions
 - Displays the active network name, adapter, category, and IP connectivity
 - Reports Microsoft Defender protection status and signature freshness
+- Reports whether Secure Boot is enabled
 
 ## Planned Checks
 
-- Secure Boot
 - Drive encryption
 - Local administrator accounts
 - Listening network ports
@@ -23,3 +23,4 @@ A read-only PowerShell tool I'm building to learn how Windows security settings 
 
 The script only reads and reports system and security information. It does not change any Windows or security settings.
 
+The Secure Boot check requires administrator access. Without it, the script reports the status as unknown and continues running.
