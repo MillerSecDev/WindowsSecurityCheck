@@ -9,6 +9,7 @@ A read-only PowerShell tool I'm building to learn how Windows security settings 
 - Displays a structured system information summary
 - Displays the active network name, adapter, category, and IP connectivity
 - Reports the status of the Domain, Private, and Public firewall profiles
+- Reports Windows Firewall logging settings for allowed and blocked connections
 - Displays the default inbound and outbound firewall actions
 - Reports Microsoft Defender protection status and signature freshness
 - Reports Microsoft Defender Controlled Folder Access mode

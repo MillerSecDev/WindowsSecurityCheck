@@ -14,6 +14,10 @@ $systemSummary = [PSCustomObject]@{
 $firewallProfiles = Get-NetFirewallProfile -PolicyStore ActiveStore |
     Select-Object Name, Enabled, DefaultInboundAction, DefaultOutboundAction
 
+# Collect Windows Firewall logging settings.
+$firewallLogging = Get-NetFirewallProfile -PolicyStore ActiveStore |
+    Select-Object Name, LogAllowed, LogBlocked, LogFileName, LogMaxSizeKilobytes
+
 # Collect the active network connection profiles.
 $networkProfiles = Get-NetConnectionProfile |
     Select-Object Name, InterfaceAlias, NetworkCategory, IPv4Connectivity, IPv6Connectivity
@@ -134,6 +138,9 @@ $networkProfiles | Format-Table -AutoSize
 
 Write-Host "`nWindows Firewall Profiles" -ForegroundColor Cyan
 $firewallProfiles | Format-Table -AutoSize
+
+Write-Host "`nWindows Firewall Logging" -ForegroundColor Cyan
+$firewallLogging | Format-Table -AutoSize
 
 Write-Host "`nMicrosoft Defender Status" -ForegroundColor Cyan
 $defenderStatus | Format-List
