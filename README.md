@@ -11,6 +11,7 @@ A read-only PowerShell tool I'm building to learn how Windows security settings 
 - Reports the status of the Domain, Private, and Public firewall profiles
 - Displays the default inbound and outbound firewall actions
 - Reports Microsoft Defender protection status and signature freshness
+- Lists the five most recently installed Windows updates
 - Reports whether Secure Boot is enabled
 - Reports system drive encryption and BitLocker protection status
 - Reports whether Remote Desktop is enabled

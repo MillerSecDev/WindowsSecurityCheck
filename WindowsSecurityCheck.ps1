@@ -31,6 +31,11 @@ $listeningPorts = Get-NetTCPConnection -State Listen |
 $defenderStatus = Get-MpComputerStatus |
     Select-Object AMRunningMode, AntivirusEnabled, RealTimeProtectionEnabled, BehaviorMonitorEnabled, IsTamperProtected, AntivirusSignatureAge, AntivirusSignatureLastUpdated
 
+# Collect the five most recently installed Windows updates.
+$recentWindowsUpdates = Get-HotFix |
+    Sort-Object InstalledOn -Descending |
+    Select-Object -First 5 HotFixID, Description, InstalledOn
+
 # Check whether Secure Boot is enabled.
 try {
     $secureBootStatus = Confirm-SecureBootUEFI -ErrorAction Stop
@@ -97,6 +102,9 @@ $firewallProfiles | Format-Table -AutoSize
 
 Write-Host "`nMicrosoft Defender Status" -ForegroundColor Cyan
 $defenderStatus | Format-List
+
+Write-Host "`nRecent Windows Updates" -ForegroundColor Cyan
+$recentWindowsUpdates | Format-Table -AutoSize
 
 Write-Host "`nSecure Boot Status" -ForegroundColor Cyan
 [PSCustomObject]@{
