@@ -16,6 +16,7 @@ A read-only PowerShell tool I'm building to learn how Windows security settings 
 - Reports whether Remote Desktop is enabled
 - Reports whether the built-in Guest account is enabled
 - Lists members of the local Administrators group and their account sources
+- Reports whether SMBv1 is enabled
 - Lists listening TCP ports, local addresses, and owning process IDs
 
 ## Requirements

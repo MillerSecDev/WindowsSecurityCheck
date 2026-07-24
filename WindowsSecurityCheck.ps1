@@ -66,6 +66,19 @@ $remoteDesktopEnabled = (
 # Check whether the built-in Guest account is enabled.
 $guestAccountEnabled = (Get-LocalUser -Name "Guest").Enabled
 
+# Check whether SMBv1 is enabled.
+try {
+    $smb1Enabled = (
+        Get-WindowsOptionalFeature `
+            -Online `
+            -FeatureName SMB1Protocol `
+            -ErrorAction Stop
+    ).State -eq "Enabled"
+}
+catch {
+    $smb1Enabled = "Unknown - administrator access required"
+}
+
 Write-Host "`nSystem Information" -ForegroundColor Cyan
 $systemSummary | Format-Table -AutoSize
 
@@ -98,6 +111,11 @@ Write-Host "`nGuest Account Status" -ForegroundColor Cyan
 
 Write-Host "`nLocal Administrator Accounts" -ForegroundColor Cyan
 $localAdminMembers | Format-Table -AutoSize
+
+Write-Host "`nSMBv1 Status" -ForegroundColor Cyan
+[PSCustomObject]@{
+    Enabled = $smb1Enabled
+} | Format-List
 
 Write-Host "`nListening TCP Ports" -ForegroundColor Cyan
 $listeningPorts | Format-Table -AutoSize
