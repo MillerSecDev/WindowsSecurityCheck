@@ -44,6 +44,27 @@ catch {
     $secureBootStatus = "Unknown - administrator access or UEFI support required"
 }
 
+# Collect TPM security processor status.
+try {
+    $tpmStatus = Get-Tpm -ErrorAction Stop |
+        Select-Object TpmPresent, TpmReady, TpmEnabled, TpmActivated, TpmOwned, ManufacturerIdTxt, ManufacturerVersion, AutoProvisioning, LockedOut, RestartPending
+}
+catch {
+    $tpmStatus = [PSCustomObject]@{
+        TpmPresent         = "Unknown"
+        TpmReady           = "Unknown"
+        TpmEnabled         = "Unknown"
+        TpmActivated       = "Unknown"
+        TpmOwned           = "Unknown"
+        ManufacturerIdTxt  = "Unknown"
+        ManufacturerVersion = "Unknown"
+        AutoProvisioning   = "Unknown"
+        LockedOut          = "Unknown"
+        RestartPending     = "Unknown"
+        Note               = "Administrator access may be required"
+    }
+}
+
 # Collect drive encryption status.
 try {
     $driveEncryptionStatus = Get-BitLockerVolume -MountPoint C: -ErrorAction Stop |
@@ -111,6 +132,9 @@ Write-Host "`nSecure Boot Status" -ForegroundColor Cyan
     Enabled = $secureBootStatus
 } | Format-List
 
+Write-Host "`nTPM Status" -ForegroundColor Cyan
+$tpmStatus | Format-List
+
 Write-Host "`nDrive Encryption Status" -ForegroundColor Cyan
 $driveEncryptionStatus | Format-List
 
@@ -139,5 +163,4 @@ Write-Host "`nSMBv1 Status" -ForegroundColor Cyan
 
 Write-Host "`nListening TCP Ports" -ForegroundColor Cyan
 $listeningPorts | Format-Table -AutoSize
-
 
