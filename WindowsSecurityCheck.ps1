@@ -14,8 +14,15 @@ $systemSummary = [PSCustomObject]@{
 $firewallProfiles = Get-NetFirewallProfile -PolicyStore ActiveStore |
     Select-Object Name, Enabled, DefaultInboundAction, DefaultOutboundAction
 
+# Collect the active network connection profiles.
+$networkProfiles = Get-NetConnectionProfile |
+    Select-Object Name, InterfaceAlias, NetworkCategory, IPv4Connectivity, IPv6Connectivity
+
 Write-Host "`nSystem Information" -ForegroundColor Cyan
 $systemSummary | Format-Table -AutoSize
+
+Write-Host "`nActive Network Profiles" -ForegroundColor Cyan
+$networkProfiles | Format-Table -AutoSize
 
 Write-Host "`nWindows Firewall Profiles" -ForegroundColor Cyan
 $firewallProfiles | Format-Table -AutoSize

@@ -9,6 +9,7 @@ A read-only PowerShell tool I'm building to learn how Windows security settings 
 - Returns the results as a structured PowerShell object
 - Reports the status of the Domain, Private, and Public firewall profiles
 - Displays the default inbound and outbound firewall actions
+- Displays the active network name, adapter, category, and IP connectivity
 
 ## Planned Checks
 
