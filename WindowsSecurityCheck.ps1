@@ -31,6 +31,20 @@ $listeningPorts = Get-NetTCPConnection -State Listen |
 $defenderStatus = Get-MpComputerStatus |
     Select-Object AMRunningMode, AntivirusEnabled, RealTimeProtectionEnabled, BehaviorMonitorEnabled, IsTamperProtected, AntivirusSignatureAge, AntivirusSignatureLastUpdated
 
+# Collect Controlled Folder Access status.
+$controlledFolderAccessValue = (
+    Get-MpPreference
+).EnableControlledFolderAccess
+
+$controlledFolderAccessStatus = switch ($controlledFolderAccessValue) {
+    0 { "Disabled" }
+    1 { "Enabled" }
+    2 { "Audit Mode" }
+    3 { "Block Disk Modification Only" }
+    4 { "Audit Disk Modification Only" }
+    default { "Unknown" }
+}
+
 # Collect the five most recently installed Windows updates.
 $recentWindowsUpdates = Get-HotFix |
     Sort-Object InstalledOn -Descending |
@@ -123,6 +137,11 @@ $firewallProfiles | Format-Table -AutoSize
 
 Write-Host "`nMicrosoft Defender Status" -ForegroundColor Cyan
 $defenderStatus | Format-List
+
+Write-Host "`nControlled Folder Access Status" -ForegroundColor Cyan
+[PSCustomObject]@{
+    Mode = $controlledFolderAccessStatus
+} | Format-List
 
 Write-Host "`nRecent Windows Updates" -ForegroundColor Cyan
 $recentWindowsUpdates | Format-Table -AutoSize
