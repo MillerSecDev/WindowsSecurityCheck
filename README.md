@@ -12,6 +12,7 @@ A read-only PowerShell tool I'm building to learn how Windows security settings 
 - Reports Windows Firewall logging settings for allowed and blocked connections
 - Displays the default inbound and outbound firewall actions
 - Reports Microsoft Defender protection status and signature freshness
+- Reports potentially unwanted app protection status
 - Reports Microsoft Defender Controlled Folder Access mode
 - Lists the five most recently installed Windows updates
 - Reports whether Secure Boot is enabled

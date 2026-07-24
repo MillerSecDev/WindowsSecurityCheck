@@ -35,6 +35,16 @@ $listeningPorts = Get-NetTCPConnection -State Listen |
 $defenderStatus = Get-MpComputerStatus |
     Select-Object AMRunningMode, AntivirusEnabled, RealTimeProtectionEnabled, BehaviorMonitorEnabled, IsTamperProtected, AntivirusSignatureAge, AntivirusSignatureLastUpdated
 
+# Collect potentially unwanted application protection status.
+$puaProtectionValue = (Get-MpPreference).PUAProtection
+
+$puaProtectionStatus = switch ($puaProtectionValue) {
+    0 { "Disabled" }
+    1 { "Enabled" }
+    2 { "Audit Mode" }
+    default { "Unknown" }
+}
+
 # Collect Controlled Folder Access status.
 $controlledFolderAccessValue = (
     Get-MpPreference
@@ -144,6 +154,11 @@ $firewallLogging | Format-Table -AutoSize
 
 Write-Host "`nMicrosoft Defender Status" -ForegroundColor Cyan
 $defenderStatus | Format-List
+
+Write-Host "`nPotentially Unwanted App Protection" -ForegroundColor Cyan
+[PSCustomObject]@{
+    Status = $puaProtectionStatus
+} | Format-List
 
 Write-Host "`nControlled Folder Access Status" -ForegroundColor Cyan
 [PSCustomObject]@{
