@@ -79,6 +79,13 @@ catch {
     $smb1Enabled = "Unknown - administrator access required"
 }
 
+# Check whether User Account Control is enabled.
+$uacEnabled = (
+    Get-ItemProperty `
+        -Path "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System" `
+        -Name "EnableLUA"
+).EnableLUA -eq 1
+
 Write-Host "`nSystem Information" -ForegroundColor Cyan
 $systemSummary | Format-Table -AutoSize
 
@@ -111,6 +118,11 @@ Write-Host "`nGuest Account Status" -ForegroundColor Cyan
 
 Write-Host "`nLocal Administrator Accounts" -ForegroundColor Cyan
 $localAdminMembers | Format-Table -AutoSize
+
+Write-Host "`nUser Account Control Status" -ForegroundColor Cyan
+[PSCustomObject]@{
+    Enabled = $uacEnabled
+} | Format-List
 
 Write-Host "`nSMBv1 Status" -ForegroundColor Cyan
 [PSCustomObject]@{
