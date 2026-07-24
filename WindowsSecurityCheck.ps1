@@ -18,6 +18,10 @@ $firewallProfiles = Get-NetFirewallProfile -PolicyStore ActiveStore |
 $networkProfiles = Get-NetConnectionProfile |
     Select-Object Name, InterfaceAlias, NetworkCategory, IPv4Connectivity, IPv6Connectivity
 
+# Collect members of the local Administrators group.
+$localAdminMembers = Get-LocalGroupMember -Name "Administrators" |
+    Select-Object Name, ObjectClass, PrincipalSource, SID
+
 # Collect Microsoft Defender protection status.
 $defenderStatus = Get-MpComputerStatus |
     Select-Object AMRunningMode, AntivirusEnabled, RealTimeProtectionEnabled, BehaviorMonitorEnabled, IsTamperProtected, AntivirusSignatureAge, AntivirusSignatureLastUpdated
@@ -66,4 +70,7 @@ Write-Host "`nSecure Boot Status" -ForegroundColor Cyan
 
 Write-Host "`nDrive Encryption Status" -ForegroundColor Cyan
 $driveEncryptionStatus | Format-List
+
+Write-Host "`nLocal Administrator Accounts" -ForegroundColor Cyan
+$localAdminMembers | Format-Table -AutoSize
 
