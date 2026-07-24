@@ -30,6 +30,23 @@ catch {
     $secureBootStatus = "Unknown - administrator access or UEFI support required"
 }
 
+# Collect drive encryption status.
+try {
+    $driveEncryptionStatus = Get-BitLockerVolume -MountPoint C: -ErrorAction Stop |
+        Select-Object MountPoint, VolumeType, VolumeStatus, EncryptionPercentage, ProtectionStatus, EncryptionMethod
+}
+catch {
+    $driveEncryptionStatus = [PSCustomObject]@{
+        MountPoint           = "C:"
+        VolumeType           = "Unknown"
+        VolumeStatus         = "Unknown"
+        EncryptionPercentage = "Unknown"
+        ProtectionStatus     = "Unknown"
+        EncryptionMethod     = "Unknown"
+        Note                 = "Administrator access may be required"
+    }
+}
+
 Write-Host "`nSystem Information" -ForegroundColor Cyan
 $systemSummary | Format-Table -AutoSize
 
@@ -46,4 +63,7 @@ Write-Host "`nSecure Boot Status" -ForegroundColor Cyan
 [PSCustomObject]@{
     Enabled = $secureBootStatus
 } | Format-List
+
+Write-Host "`nDrive Encryption Status" -ForegroundColor Cyan
+$driveEncryptionStatus | Format-List
 
