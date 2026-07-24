@@ -10,10 +10,10 @@ A read-only PowerShell tool I'm building to learn how Windows security settings 
 - Reports the status of the Domain, Private, and Public firewall profiles
 - Displays the default inbound and outbound firewall actions
 - Displays the active network name, adapter, category, and IP connectivity
+- Reports Microsoft Defender protection status and signature freshness
 
 ## Planned Checks
 
-- Microsoft Defender
 - Secure Boot
 - Drive encryption
 - Local administrator accounts
@@ -21,5 +21,5 @@ A read-only PowerShell tool I'm building to learn how Windows security settings 
 
 ## Safety
 
-The script currently reads system information only. It does not change any Windows or security settings.
+The script only reads and reports system and security information. It does not change any Windows or security settings.
 

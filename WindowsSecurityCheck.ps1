@@ -18,6 +18,10 @@ $firewallProfiles = Get-NetFirewallProfile -PolicyStore ActiveStore |
 $networkProfiles = Get-NetConnectionProfile |
     Select-Object Name, InterfaceAlias, NetworkCategory, IPv4Connectivity, IPv6Connectivity
 
+# Collect Microsoft Defender protection status.
+$defenderStatus = Get-MpComputerStatus |
+    Select-Object AMRunningMode, AntivirusEnabled, RealTimeProtectionEnabled, BehaviorMonitorEnabled, IsTamperProtected, AntivirusSignatureAge, AntivirusSignatureLastUpdated
+
 Write-Host "`nSystem Information" -ForegroundColor Cyan
 $systemSummary | Format-Table -AutoSize
 
@@ -27,3 +31,5 @@ $networkProfiles | Format-Table -AutoSize
 Write-Host "`nWindows Firewall Profiles" -ForegroundColor Cyan
 $firewallProfiles | Format-Table -AutoSize
 
+Write-Host "`nMicrosoft Defender Status" -ForegroundColor Cyan
+$defenderStatus | Format-List
