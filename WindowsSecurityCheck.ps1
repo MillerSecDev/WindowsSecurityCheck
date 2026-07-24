@@ -22,6 +22,11 @@ $networkProfiles = Get-NetConnectionProfile |
 $localAdminMembers = Get-LocalGroupMember -Name "Administrators" |
     Select-Object Name, ObjectClass, PrincipalSource, SID
 
+# Collect listening TCP ports.
+$listeningPorts = Get-NetTCPConnection -State Listen |
+    Select-Object LocalAddress, LocalPort, State, OwningProcess |
+    Sort-Object -Property LocalPort
+
 # Collect Microsoft Defender protection status.
 $defenderStatus = Get-MpComputerStatus |
     Select-Object AMRunningMode, AntivirusEnabled, RealTimeProtectionEnabled, BehaviorMonitorEnabled, IsTamperProtected, AntivirusSignatureAge, AntivirusSignatureLastUpdated
@@ -73,4 +78,7 @@ $driveEncryptionStatus | Format-List
 
 Write-Host "`nLocal Administrator Accounts" -ForegroundColor Cyan
 $localAdminMembers | Format-Table -AutoSize
+
+Write-Host "`nListening TCP Ports" -ForegroundColor Cyan
+$listeningPorts | Format-Table -AutoSize
 

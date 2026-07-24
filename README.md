@@ -14,10 +14,7 @@ A read-only PowerShell tool I'm building to learn how Windows security settings 
 - Reports whether Secure Boot is enabled
 - Reports system drive encryption and BitLocker protection status
 - Lists members of the local Administrators group and their account sources
-
-## Planned Checks
-
-- Listening network ports
+- Lists listening TCP ports, local addresses, and owning process IDs
 
 ## Safety
 
