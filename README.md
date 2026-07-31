@@ -48,6 +48,7 @@ A read-only PowerShell tool I'm building to learn how Windows security settings 
    ```
 
 For complete Secure Boot and drive encryption results, run PowerShell as Administrator.
+Run the script again after major Windows updates to verify your security settings remain as expected.
 
 ## Safety
 
